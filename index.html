@@ -1,25 +1,240 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Sample Project</title>
-  <link rel="stylesheet" href="style.css" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Daily Mood Tracker & Journal</title>
+    <link rel="stylesheet" href="./style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
 </head>
 <body>
-  <header>
-    <h1>Sample Project</h1>
-  </header>
+    <div class="max-width-container">
+        <!-- Enhanced Header with Actions -->
+        <header class="header-center">
+            <h1>✨ My Daily Mood ✨</h1>
+            <p>Log your feelings and track your emotional journey.</p>
+            <div class="header-actions">
+                <button id="toggle-theme-btn" class="icon-button" title="Toggle Theme">
+                    🌙
+                </button>
+                <button id="export-data-btn" class="icon-button" title="Export Data">
+                    📥
+                </button>
+                <button id="import-data-btn" class="icon-button" title="Import Data">
+                    📤
+                </button>
+            </div>
+        </header>
 
-  <main>
-    <p id="message">Welcome! Click the button to see an action.</p>
-    <button id="actionBtn" type="button">Click me</button>
-  </main>
+        <!-- Enhanced Stats Dashboard -->
+        <div class="dashboard-container">
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-icon">📝</div>
+                    <div class="stat-number" id="total-entries">0</div>
+                    <div class="stat-label">Total Entries</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">🔥</div>
+                    <div class="stat-number" id="current-streak">0</div>
+                    <div class="stat-label">Day Streak</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">⭐</div>
+                    <div class="stat-number" id="most-common-mood">-</div>
+                    <div class="stat-label">Most Common</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">📅</div>
+                    <div class="stat-number" id="this-week-entries">0</div>
+                    <div class="stat-label">This Week</div>
+                </div>
+            </div>
 
-  <footer>
-    <small>&copy; 2025 Sample Project</small>
-  </footer>
+            <!-- Mood Distribution Chart -->
+            <div class="card-section">
+                <h2>📊 Mood Distribution</h2>
+                <div class="mood-distribution-container">
+                    <div class="mood-dist-item" data-mood="amazing">
+                        <div class="mood-dist-bar" id="dist-amazing" style="width: 0%"></div>
+                        <div class="mood-dist-label">
+                            <span>🥳 Amazing</span>
+                            <span id="count-amazing">0</span>
+                        </div>
+                    </div>
+                    <div class="mood-dist-item" data-mood="good">
+                        <div class="mood-dist-bar" id="dist-good" style="width: 0%"></div>
+                        <div class="mood-dist-label">
+                            <span>😊 Good</span>
+                            <span id="count-good">0</span>
+                        </div>
+                    </div>
+                    <div class="mood-dist-item" data-mood="neutral">
+                        <div class="mood-dist-bar" id="dist-neutral" style="width: 0%"></div>
+                        <div class="mood-dist-label">
+                            <span>😐 Neutral</span>
+                            <span id="count-neutral">0</span>
+                        </div>
+                    </div>
+                    <div class="mood-dist-item" data-mood="stressed">
+                        <div class="mood-dist-bar" id="dist-stressed" style="width: 0%"></div>
+                        <div class="mood-dist-label">
+                            <span>😟 Stressed</span>
+                            <span id="count-stressed">0</span>
+                        </div>
+                    </div>
+                    <div class="mood-dist-item" data-mood="terrible">
+                        <div class="mood-dist-bar" id="dist-terrible" style="width: 0%"></div>
+                        <div class="mood-dist-label">
+                            <span>😩 Terrible</span>
+                            <span id="count-terrible">0</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
-  <script src="script.js" defer></script>
+            <!-- Weekly Overview -->
+            <div class="card-section">
+                <div class="section-header">
+                    <h2>📅 Weekly Overview</h2>
+                    <div class="view-toggle">
+                        <button class="toggle-btn active" data-view="week">Week</button>
+                        <button class="toggle-btn" data-view="month">Month</button>
+                    </div>
+                </div>
+                <div id="calendar-view" class="calendar-grid"></div>
+            </div>
+        </div>
+
+        <main id="app-content">
+            <!-- Mood Logging Form -->
+            <section class="card-section">
+                <h2>🎭 How are you feeling right now?</h2>
+                
+                <form id="mood-form">
+                    <div class="mood-grid">
+                        <div class="mood-option">
+                            <input type="radio" id="mood-amazing" name="mood" value="Amazing" required>
+                            <label for="mood-amazing" class="mood-label mood-amazing">
+                                🥳 Amazing
+                            </label>
+                        </div>
+                        <div class="mood-option">
+                            <input type="radio" id="mood-good" name="mood" value="Good">
+                            <label for="mood-good" class="mood-label mood-good">
+                                😊 Good
+                            </label>
+                        </div>
+                        <div class="mood-option">
+                            <input type="radio" id="mood-neutral" name="mood" value="Neutral">
+                            <label for="mood-neutral" class="mood-label mood-neutral">
+                                😐 Neutral
+                            </label>
+                        </div>
+                        <div class="mood-option">
+                            <input type="radio" id="mood-stressed" name="mood" value="Stressed">
+                            <label for="mood-stressed" class="mood-label mood-stressed">
+                                😟 Stressed
+                            </label>
+                        </div>
+                        <div class="mood-option">
+                            <input type="radio" id="mood-terrible" name="mood" value="Terrible">
+                            <label for="mood-terrible" class="mood-label mood-terrible">
+                                😩 Terrible
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- Enhanced note section with character counter -->
+                    <label for="note" class="block-label">
+                        📝 Short Journal Note (Optional)
+                        <span class="char-counter"><span id="char-count">0</span>/500</span>
+                    </label>
+                    <textarea id="note" class="textarea-input" rows="3" placeholder="Write a few thoughts about your day..." maxlength="500"></textarea>
+                    
+                    <!-- Tags/Categories -->
+                    <div class="tags-section">
+                        <label class="block-label">🏷️ Tags (Optional)</label>
+                        <div class="tags-input-container">
+                            <div id="selected-tags" class="selected-tags"></div>
+                            <input type="text" id="tag-input" class="tag-input" placeholder="Add a tag and press Enter...">
+                        </div>
+                        <div class="suggested-tags">
+                            <button type="button" class="tag-suggestion" data-tag="work">Work</button>
+                            <button type="button" class="tag-suggestion" data-tag="family">Family</button>
+                            <button type="button" class="tag-suggestion" data-tag="health">Health</button>
+                            <button type="button" class="tag-suggestion" data-tag="social">Social</button>
+                            <button type="button" class="tag-suggestion" data-tag="exercise">Exercise</button>
+                        </div>
+                    </div>
+                    
+                    <div class="button-group">
+                        <button type="submit" class="submit-button">
+                            Log Mood & Note
+                        </button>
+                        <button type="button" class="secondary-button" id="clear-all-btn">
+                            Clear All Data
+                        </button>
+                    </div>
+                </form>
+            </section>
+
+            <!-- Trends & History -->
+            <section class="card-section">
+                <h2>📈 Emotional Trends (Last 7 Days)</h2>
+
+                <div id="mood-chart" class="mood-chart-container"></div>
+                <div id="chart-labels" class="chart-labels-container"></div>
+                
+                <!-- Search and Filter Section -->
+                <div class="history-controls">
+                    <h3>📖 Journal Entries</h3>
+                    <div class="search-bar">
+                        <input type="text" id="search-input" placeholder="🔍 Search entries..." class="search-input">
+                    </div>
+                </div>
+                
+                <div class="filter-buttons" id="filter-buttons">
+                    <button class="filter-btn active" data-mood="All">All</button>
+                    <button class="filter-btn" data-mood="Amazing">🥳 Amazing</button>
+                    <button class="filter-btn" data-mood="Good">😊 Good</button>
+                    <button class="filter-btn" data-mood="Neutral">😐 Neutral</button>
+                    <button class="filter-btn" data-mood="Stressed">😟 Stressed</button>
+                    <button class="filter-btn" data-mood="Terrible">😩 Terrible</button>
+                </div>
+
+                <!-- Sort Options -->
+                <div class="sort-controls">
+                    <label for="sort-select">Sort by:</label>
+                    <select id="sort-select" class="sort-select">
+                        <option value="newest">Newest First</option>
+                        <option value="oldest">Oldest First</option>
+                        <option value="mood-best">Best Mood First</option>
+                        <option value="mood-worst">Worst Mood First</option>
+                    </select>
+                </div>
+
+                <div id="mood-history-list" class="mood-history-list">
+                    <p class="no-entries-message" id="no-entries-message">No entries yet. Log your first mood above!</p>
+                </div>
+            </section>
+        </main>
+
+        <!-- Enhanced Modal -->
+        <div id="app-modal" class="app-modal hidden-modal">
+            <div class="modal-content" onclick="event.stopPropagation()">
+                <h3 id="modal-title" class="modal-title"></h3>
+                <p id="modal-message" class="modal-message"></p>
+                <div class="modal-buttons">
+                    <button id="modal-close-btn" class="modal-close-button">Close</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Hidden file input for import -->
+        <input type="file" id="file-input" accept=".json" style="display: none;">
+    </div>
+
+    <script src="./script.js"></script>
 </body>
 </html>
